@@ -9,20 +9,9 @@ if (isset($_POST['password']))
 if ($password =='')
 { unset($password);} }
 
-if (isset($_POST['email']))
-{ $email=$_POST['email'];
-if ($email =='')
-{ unset($email);} }
-
-if (isset($_POST['surname']))
-{ $surname=$_POST['surname'];
-if ($surname =='')
-{ unset($surname);} }
-
-if (isset($_POST['name']))
-{ $name=$_POST['name'];
-if ($name =='')
-{ unset($name);} }
+$email=$_POST['email'];
+$surname=$_POST['surname'];
+$name=$_POST['name'];
 
 if (empty($login) or empty($password)) //если пользователь не ввел логин или пароль, то выдаем ошибку и останавливаем скрипт
 {
