@@ -10,7 +10,7 @@
             <textarea name="comments" readonly class="form-control"><?php echo $comment['comment'];?></textarea>
             <?php
             if (!empty($_SESSION['login']) and !empty($_SESSION['password'])) {
-                echo "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' data-whatever='{$comment['id']}'>Ответить</button>";
+                echo "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal' data-whatever='{$comment['id']}'>РћС‚РІРµС‚РёС‚СЊ</button>";
             }
            ?>
         </div>

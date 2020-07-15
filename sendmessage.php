@@ -20,8 +20,8 @@ include ("bd.php");
 $sql = "SELECT id FROM comments WHERE id='$parrent'";
 $result = $db->query($sql);
 if ($result->num_rows==0 && $parrent!=0){
-    echo "<a href = 'index.php'>На главную</a></br>";
-    echo "Комментарий не найден!";
+    echo "<a href = 'index.php'>РќР° РіР»Р°РІРЅСѓСЋ</a></br>";
+    echo "РљРѕРјРјРµРЅС‚Р°СЂРёР№ РЅРµ РЅР°Р№РґРµРЅ!";
 }
 else {
     $sql = "INSERT INTO comments (comment, id_parrent, user) VALUES ('$comments', '$parrent', '$id')";

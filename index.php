@@ -21,10 +21,10 @@ $myrow = $result->fetch_array();
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
-    <title>Главная страница</title>
+    <title>Р“Р»Р°РІРЅР°СЏ СЃС‚СЂР°РЅРёС†Р°</title>
 </head>
 <body>
-<h2>Главная страница</h2>
+<h2>Р“Р»Р°РІРЅР°СЏ СЃС‚СЂР°РЅРёС†Р°</h2>
 
 <?php
 $sql = "SELECT u.login, co.comment, co.id_parrent, co.id
@@ -98,7 +98,7 @@ $comments = getCommentsTemplate($comments);
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <input type="submit" name = "submit" class="btn btn-primary" value="Отправить">
+                <input type="submit" name = "submit" class="btn btn-primary" value="РћС‚РїСЂР°РІРёС‚СЊ">
                 <button type="submit" class="btn btn-primary">Send message</button>
             </div>
         </div>
@@ -112,30 +112,30 @@ $comments = getCommentsTemplate($comments);
     <form action="testreg.php" method="post" class="form-inline">
     	<div class="form-group mb-2">
     		<label for="staticEmail2" class="sr-only">Email</label>
-    		<input type="text" class="form-control" name = "login" placeholder="Логин">
+    		<input type="text" class="form-control" name = "login" placeholder="Р›РѕРіРёРЅ">
     	</div>
     	<div class="form-group mx-sm-3 mb-2">
     		<label for="inputPassword2" class="sr-only">Password</label>
-    		<input type="password" class="form-control" name="password" placeholder="Пароль">
+    		<input type="password" class="form-control" name="password" placeholder="РџР°СЂРѕР»СЊ">
     	</div>
-      <button type="submit" class="btn btn-primary mb-2">Войти</button>
+      <button type="submit" class="btn btn-primary mb-2">Р’РѕР№С‚Рё</button>
     </form>
-    <a href="reg.php">Зарегистрироваться</a>
-    Вы вошли на сайт, как гость</p>
+    <a href="reg.php">Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊСЃСЏ</a>
+    Р’С‹ РІРѕС€Р»Рё РЅР° СЃР°Р№С‚, РєР°Рє РіРѕСЃС‚СЊ</p>
 HERE;
 }
 
 else {
     print <<<HERE
-    Вы вошли на сайт, как $_SESSION[login] (<a href='exit.php'>выход</a>)</br>
+    Р’С‹ РІРѕС€Р»Рё РЅР° СЃР°Р№С‚, РєР°Рє $_SESSION[login] (<a href='exit.php'>РІС‹С…РѕРґ</a>)</br>
     
     <form action="sendmessage.php" method="post" class = "comments">
         <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text">Новый комментарий:</span>
+                <span class="input-group-text">РќРѕРІС‹Р№ РєРѕРјРјРµРЅС‚Р°СЂРёР№:</span>
             </div>
             <textarea name=comments class="form-control" aria-label="With textarea"></textarea>
-            <input type="submit" name = "submit" class="btn btn-outline-primary" value="Отправить">
+            <input type="submit" name = "submit" class="btn btn-outline-primary" value="РћС‚РїСЂР°РІРёС‚СЊ">
         </div>
         
         <input type="hidden" id="parrent" name = "parrent" value ="0">
@@ -157,3 +157,21 @@ HERE;
     })</script>
 </body>
 </html>
+
+CREATE Table comments
+(
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+id_parrent INT NOT NULL,
+comment VARCHAR(500) NOT NULL
+user INT NOT NULL
+)
+
+CREATE Table users
+(
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+login VARCHAR(35) NOT NULL
+password VARCHAR(35) NOT NULL
+email VARCHAR(35) NOT NULL
+name VARCHAR(35) NOT NULL
+surname VARCHAR(35) NOT NULL
+)
