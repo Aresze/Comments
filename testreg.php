@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: text/html; charset=UTF-8');
 session_start();
 
 if (isset($_POST['login'])) {
@@ -20,25 +21,17 @@ if (empty($login) or empty($password)) //если пользователь не 
 exit ("Вы ввели не всю информацию, вернитесь назад и заполните все поля!");
 }
 
-$login = stripslashes($login);
 $login = htmlspecialchars($login);
-
-$password = stripslashes($password);
-$password = htmlspecialchars($password);
-
-//удаляем лишние пробелы
 $login = trim($login);
+
 $password = trim($password);
-
+$password = htmlspecialchars($password);
 include ("bd.php");
-//$password = md5($password);//шифруем пароль
-//$password = strrev($password);// для надежности добавим реверс
-//$password = $password."b3p6f";
 
-$sql = ("SELECT * FROM users WHERE login='$login' AND password='$password'");
+$sql = 'SELECT * FROM users WHERE login= "'.$db->real_escape_string($login).'"
+                            AND password = "'.$db->real_escape_string($password).'"';
 $result = $db->query($sql);
 $myrow = $result->fetch_array();
-
 if (empty($myrow['id']))
 {
 exit ("Извините, введённый вами логин или пароль неверный.");

@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: text/html; charset=UTF-8');
+
 if (isset($_POST['login']))
 { $login = $_POST['login'];
 if ($login == '')
@@ -17,23 +19,13 @@ if (empty($login) or empty($password)) //если пользователь не 
 {
 exit ("Вы ввели не всю информацию, вернитесь назад и заполните все поля!");
 }
-//если логин и пароль введены,то обрабатываем их, чтобы теги и скрипты не работали, мало ли что люди могут ввести
-$login = stripslashes($login);
+
 $login = htmlspecialchars($login);
-
-$password = stripslashes($password);
 $password = htmlspecialchars($password);
-
-$email = stripslashes($email);
 $email = htmlspecialchars($email);
-
-$surname = stripslashes($surname);
 $surname = htmlspecialchars($surname);
-
-$name = stripslashes($name);
 $name = htmlspecialchars($name);
 
-//удаляем лишние пробелы
 $login = trim($login);
 $password = trim($password);
 $email = trim($email);
@@ -49,7 +41,9 @@ exit ("Пароль должен состоять не менее чем из 3 
 }
 
 include ("bd.php");
-$sql = "SELECT id FROM users WHERE login='$login'";
+$sql = 'SELECT id FROM users WHERE login="'.$db->real_escape_string($login).'"';
+
+
 $result = $db->query($sql);
 $myrow = $result->fetch_array();
 
@@ -57,7 +51,13 @@ if (!empty($myrow['id'])) {
 exit ("Извините, введённый вами логин уже зарегистрирован. Введите другой логин.");
 }
 
-$sql = "INSERT INTO users (login,password,email,surname,name) VALUES('$login','$password','$email','$surname','$name')";
+$sql = 'INSERT INTO users (login,password,email,surname,name)
+        VALUES("'.$db->real_escape_string($login).'",
+        "'.$db->real_escape_string($password).'",
+        "'.$db->real_escape_string($email).'",
+        "'.$db->real_escape_string($surname).'",
+        "'.$db->real_escape_string($name).'")';
+
 if ($db->query($sql)=='TRUE')
 {
 echo "Вы успешно зарегистрированы! Теперь вы можете зайти на сайт. <a href='index.php'>Главная страница</a>";
