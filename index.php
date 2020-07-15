@@ -99,7 +99,6 @@ $comments = getCommentsTemplate($comments);
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <input type="submit" name = "submit" class="btn btn-primary" value="Отправить">
-                <button type="submit" class="btn btn-primary">Send message</button>
             </div>
         </div>
     </div>
