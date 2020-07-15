@@ -157,21 +157,3 @@ HERE;
     })</script>
 </body>
 </html>
-
-CREATE Table comments
-(
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-id_parrent INT NOT NULL,
-comment VARCHAR(500) NOT NULL
-user INT NOT NULL
-)
-
-CREATE Table users
-(
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-login VARCHAR(35) NOT NULL
-password VARCHAR(35) NOT NULL
-email VARCHAR(35) NOT NULL
-name VARCHAR(35) NOT NULL
-surname VARCHAR(35) NOT NULL
-)
