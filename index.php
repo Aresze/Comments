@@ -1,79 +1,38 @@
 <?php
 session_start();
+include ("helper.php");
+$db = new DB();
+$authorized = true;
 
-include ("bd.php");
+if (!empty($_SESSION['login']) and !empty($_SESSION['password'])) {
+    $login = $_SESSION['login'];
+    $password = $_SESSION['password'];
 
-if (!empty($_SESSION['login']) and !empty($_SESSION['password']))
-{
-$login = $_SESSION['login'];
-$password = $_SESSION['password'];
-$sql = "SELECT id FROM users WHERE login='$login' AND password='$password'";
-
-$result = $db ->query($sql);
-$myrow = $result->fetch_array();
+    $authorized = !$db->validate($login,$password);
 }
+
 ?>
+
 <html>
 <head>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <meta charset="utf-8">
     <title>Главная страница</title>
 </head>
 <body>
 <h2>Главная страница</h2>
 
-<?php
-$sql = "SELECT u.login, co.comment, co.id_parrent, co.id
-        FROM `comments` co
-        INNER JOIN `users` u
-        ON u.id = co.user
-        ORDER BY co.id";
-
-$result = $db->query($sql);
-$_comments = array();
-
-while($row =  $result->fetch_array()){
-    $_comments[$row['id']] = $row;
-}
-
-function build_tree($data){
-    $tree = array();
-    foreach($data as $id => &$row){
-        if(empty($row['id_parrent'])){
-            $tree[$id] = &$row;
-        }
-        else{
-            $data[$row['id_parrent']]['childs'][$id] = &$row;
-        }
-    }
-    return $tree;
-}
-function getCommentsTemplate($comments){
-    
-    $html = '';
-    foreach($comments as $comment){
-	    ob_start(); 
-        include 'comments_template.php';
-		$html .= ob_get_clean();
-    }
-return $html;
-}
-
-$comments = build_tree($_comments);
-unset($_comments);
-$comments = getCommentsTemplate($comments);
-?>
-
 <div class="comments_wrap">
-   <ul class="list-group">
-      <?php echo $comments;?>
-   </ul>
+    <ul class="list-group">
+        <?php echo printComments($db->getCommentsBD());?>
+    </ul>
 </div>
 </br>
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <form action="sendmessage.php" method="post" class = "comments">
     <div class="modal-dialog">
@@ -106,7 +65,7 @@ $comments = getCommentsTemplate($comments);
 </div>
 
 <?php
-    if (!isset($myrow['id']) or $myrow['id']=='') {
+    if ($authorized) {
         print <<<HERE
     <form action="testreg.php" method="post" class="form-inline">
     	<div class="form-group mb-2">
