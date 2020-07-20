@@ -7,4 +7,3 @@ class ModuleEnum
     const comment = 3;
     const childs = 4;
 }
-?>

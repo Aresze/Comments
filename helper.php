@@ -5,9 +5,8 @@ include "class/DB.php";
 include "class/ModuleEnum.php";
 
 
-//TO DO: fix in out data class comment
 function build_tree($data){
-    $tree = array();
+    $tree = [];
     foreach($data as $id => &$row){
         if(empty($row[ModuleEnum::id_parrent])){
             $tree[$id] = &$row;
@@ -18,9 +17,7 @@ function build_tree($data){
     }
     return $tree;
 }
-//TO DO: fix in out data class comment
 function getCommentsTemplate($comments){
-
     $html = '';
     foreach($comments as $comment){
         ob_start();
@@ -29,7 +26,6 @@ function getCommentsTemplate($comments){
     }
     return $html;
 }
-//TO DO: fix in out data class comment
 function getComments($data){
     $comments = new Comments();
     while($row = mysqli_fetch_array($data))
@@ -38,10 +34,22 @@ function getComments($data){
     }
     return $comments->getComment();
 }
+function validate(){
+    $db = new DB();
 
-function printComments($data)
+    if (!empty($_SESSION['login']) and !empty($_SESSION['password'])) {
+        $login = $_SESSION['login'];
+        $password = $_SESSION['password'];
+        return $authorized = !$db->validate($login,$password);
+    }
+    else return true;
+
+}
+function printComments()
 {
-    $_comments = array();
+    $db = new DB();
+    $data = $db->getCommentsBD();
+    $_comments = [];
 
     $commentsData = getComments($data);
     foreach ($commentsData as $item) {

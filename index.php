@@ -1,19 +1,9 @@
 <?php
-session_start();
-include ("helper.php");
-$db = new DB();
-$authorized = true;
-
-if (!empty($_SESSION['login']) and !empty($_SESSION['password'])) {
-    $login = $_SESSION['login'];
-    $password = $_SESSION['password'];
-
-    $authorized = !$db->validate($login,$password);
-}
-
+    session_start();
+    include ("helper.php");
+    $authorized = validate();
 ?>
-
-<html>
+<html lang="ru">
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
@@ -28,10 +18,9 @@ if (!empty($_SESSION['login']) and !empty($_SESSION['password'])) {
 
 <div class="comments_wrap">
     <ul class="list-group">
-        <?php echo printComments($db->getCommentsBD());?>
+        <?php echo printComments();?>
     </ul>
 </div>
-</br>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <form action="sendmessage.php" method="post" class = "comments">
@@ -110,7 +99,7 @@ HERE;
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
-        modal.find('.modal-title').text('New message to ' + recipient)
+        modal.find('.modal-title').text('Новое сообщение для #' + recipient)
         modal.find('.modal-body input').val(recipient)
     })</script>
 </body>

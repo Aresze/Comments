@@ -56,7 +56,7 @@ Class Comment{
 
 Class Comments
 {
-    private $_comment = array();
+    private $_comment = [];
 
     /**
      * @return array
@@ -75,4 +75,4 @@ Class Comments
     }
 }
 
-?>
+
