@@ -2,17 +2,18 @@
 include "class/Comment.php";
 include "class/MyUser.php";
 include "class/DB.php";
+include "class/ModuleEnum.php";
 
 
 //TO DO: fix in out data class comment
 function build_tree($data){
     $tree = array();
     foreach($data as $id => &$row){
-        if(empty($row['id_parrent'])){
+        if(empty($row[ModuleEnum::id_parrent])){
             $tree[$id] = &$row;
         }
         else{
-            $data[$row['id_parrent']]['childs'][$id] = &$row;
+            $data[$row[ModuleEnum::id_parrent]][ModuleEnum::childs][$id] = &$row;
         }
     }
     return $tree;
@@ -31,22 +32,25 @@ function getCommentsTemplate($comments){
 //TO DO: fix in out data class comment
 function getComments($data){
     $comments = new Comments();
-    while($row = $data->fetch_assoc())
+    while($row = mysqli_fetch_array($data))
     {
         $comments->setComment($row['id'],$row['login'],$row['comment'],$row['id_parrent']);
     }
-    return $comments;
+    return $comments->getComment();
 }
 
 function printComments($data)
 {
     $_comments = array();
-    while ($row = $data->fetch_array()) {
-        $_comments[$row['id']] = $row;
+
+    $commentsData = getComments($data);
+    foreach ($commentsData as $item) {
+        $_comments[$item->getId()] = [$item->getId(), $item->getLogin(), $item->getParrent(), $item->getComment()];
     }
 
     $comments = build_tree($_comments);
     unset($_comments);
+    unset($commentsData);
     $comments = getCommentsTemplate($comments);
     return $comments;
 }

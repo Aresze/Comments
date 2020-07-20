@@ -33,7 +33,7 @@ class DB
 
     public function getCommentsBD()
     {
-        return $this->_db->query("SELECT u.login, co.comment, co.id_parrent, co.id
+        return $this->query("SELECT u.login, co.comment, co.id_parrent, co.id
                                         FROM `comments` co
                                         INNER JOIN `users` u
                                         ON u.id = co.user
