@@ -2,20 +2,19 @@
 
 In file bd.php change mysqli_connect ("127.0.0.1","user","1234",bd);
 
-CREATE Table comments
-(
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-id_parrent INT NOT NULL,
-comment VARCHAR(1000) NOT NULL,
-user INT NOT NULL
-);
+CREATE TABLE IF NOT EXISTS `comments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_parrent` int(11) NOT NULL,
+  `comment` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 
-CREATE Table users
-(
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-login VARCHAR(35) NOT NULL,
-password VARCHAR(35) NOT NULL,
-email VARCHAR(35),
-name VARCHAR(35),
-surname VARCHAR(35)
-);
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `surname` varchar(35) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+)
